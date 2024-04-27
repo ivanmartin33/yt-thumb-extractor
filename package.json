@@ -11,7 +11,26 @@
   },
   "dependencies": {
     "nuxt": "^3.11.2",
+    "tailwindcss-animate": "^1.0.7",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.12.0",
+    "@pinia/nuxt": "^0.5.1",
+    "@unocss/nuxt": "^0.59.4",
+    "@unocss/transformer-directives": "^0.59.4",
+    "@vueuse/core": "^10.9.0",
+    "@vueuse/nuxt": "^10.9.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-vue-next": "^0.376.0",
+    "pinia": "^2.1.7",
+    "radix-vue": "^1.7.2",
+    "shadcn-nuxt": "^0.10.4",
+    "tailwind-merge": "^2.3.0",
+    "unocss": "^0.59.4",
+    "unocss-preset-animations": "^1.0.2",
+    "unocss-preset-shadcn": "^0.2.3"
   }
 }
