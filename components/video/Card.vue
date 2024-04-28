@@ -1,35 +1,12 @@
 <script setup lang="ts">
 import { type VideoFront } from '@/server/types';
 import { placeholderB64 } from './placeholder'
+import {type VideoCardProps } from '@/server/types'
+const { store: videoCardProps } = storeToRefs(useMainStore())
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
     video: VideoFront,
-    showAvatar: boolean,
-    showTitle: boolean,
-    showDuration: boolean,
-    showViews: boolean,
-    showTimeSince: boolean,
-    showMetadata: boolean,
-    showProgress: boolean,
-    progress: number,
-    isDark: string,
-    isTransparent: boolean,
-    padding: number,
-    cornerRadius: number,
-}>(), {
-    showAvatar: true,
-    showTitle: true,
-    showDuration: true,
-    showViews: true,
-    showTimeSince: true,
-    showMetadata: true,
-    showProgress: true,
-    progress: 37,
-    isDark: 'light',
-    isTransparent: false,
-    padding: 50,
-    cornerRadius: 50
-});
+}>()
 
 const duration = computed(() => {
     const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/
@@ -128,13 +105,13 @@ const fetchThumbnail = async (thumb_url: string) => {
     }
 }
 
-const pad = ref(props.padding)
-watch(() => props.padding, (newVal) => {
+const pad = ref(videoCardProps.value.padding)
+watch(() => videoCardProps.value.padding, (newVal) => {
     pad.value = newVal
 })
 
-const round = ref(props.cornerRadius)
-watch(() => props.cornerRadius, (newVal) => {
+const round = ref(videoCardProps.value.cornerRadius)
+watch(() => videoCardProps.value.cornerRadius, (newVal) => {
     round.value = newVal
 })
 
@@ -142,33 +119,33 @@ watch(() => props.cornerRadius, (newVal) => {
 
 <template>
     <div id="main-card" class="darkMode dynamicXlRound w-full flex flex-col gap-4 w-full justify-center dynamicPad"
-        :class="[isTransparent ? 'noBg' : '']" :data-theme="isDark">
-        <ShAspectRatio :ratio="16 / 9" class="overflow-hidden dynamicLgRound" :as="'div'">
+        :class="[videoCardProps.isTransparent ? 'noBg' : '']" :data-theme="videoCardProps.isDark">
+       <ShAspectRatio :ratio="16 / 9" class="overflow-hidden dynamicLgRound" :as="'div'">
             <img class="w-full h-full object-cover " :src="imgThumb" alt="video thumbnail" />
-            <div v-if="showDuration && showMetadata"
+            <div v-if="videoCardProps.showDuration && videoCardProps.showMetadata"
                 class="absolute bg-black text-xs text-white font-medium bg-op-60 bottom-0 right-0 py-0.5 px-1.25 m-2.25 dynamicSmRound dynamicMargin">
                 {{ duration }}
             </div>
 
-            <div v-if="showProgress" class="absolute bottom-0 w-full">
-                <ShProgress :model-value="progress" class="rounded-none h-1.25" />
+            <div v-if="videoCardProps.showProgress" class="absolute bottom-0 w-full">
+                <ShProgress :model-value="videoCardProps.progress[0]" class="rounded-none h-1.25" />
             </div>
         </ShAspectRatio>
-        <div class="flex gap-4" v-if="showMetadata">
-            <div v-if="showAvatar">
+        <div class="flex gap-4" v-if="videoCardProps.showMetadata">
+            <div v-if="videoCardProps.showAvatar">
                 <ShAvatar>
                     <ShAvatarImage :src="avatar!" alt="channel avatar" />
                 </ShAvatar>
             </div>
             <div class="flex flex-col">
-                <div v-if="showTitle">
+                <div v-if="videoCardProps.showTitle">
                     <h2 class="text-base md:text-base font-semibold text-balance ">{{ props.video.title }}</h2>
                     <p class="text-sm text-gray-500">{{ props.video.channelTitle }}</p>
                 </div>
                 <div class="flex justify-start">
-                    <div v-if="showViews" class="text-sm text-gray-500">{{ formatViews(parseInt(props.video.viewCount))
+                    <div v-if="videoCardProps.showViews" class="text-sm text-gray-500">{{ formatViews(parseInt(props.video.viewCount))
                         }} vues</div>
-                    <div v-if="showTimeSince"
+                    <div v-if="videoCardProps.showTimeSince"
                         class="text-sm text-gray-500 not-first:before:content-['•'] not-first:before:my-0 not-first:before:mx-4px">
                         {{ timeSince(new
                             Date(props.video.publishedAt)) }}</div>

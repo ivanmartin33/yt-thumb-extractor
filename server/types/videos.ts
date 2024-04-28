@@ -99,3 +99,19 @@ interface ContentDetails {
   projection: string;
   hasCustomThumbnail: boolean;
 }
+
+export interface VideoCardProps {
+  showAvatar: boolean
+  showTitle: boolean
+  showDuration: boolean
+  showViews: boolean
+  showTimeSince: boolean
+  showMetadata: boolean
+  showProgress: boolean
+  progress: number[]
+  isDark: string
+  isTransparent: boolean
+  padding: number[]
+  cornerRadius: number[]
+  globalDisabled: boolean
+}
