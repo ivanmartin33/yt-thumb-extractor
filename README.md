@@ -11,7 +11,7 @@ This is a simple Vue 3 application that allows you to extract a youtube video th
 - Extract youtube video thumbnail from a youtube video URL
 - Hide / Show features
   - Title
-  - Channel name
+  - Channel Avatar
   - Publish date
   - Duration
   - View count
