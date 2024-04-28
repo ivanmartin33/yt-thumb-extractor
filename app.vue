@@ -4,7 +4,6 @@ import { type VideoFront } from '@/server/types';
 import { domToPng } from 'modern-screenshot'
 import slugify from 'slugify';
 
-
 const { store } = storeToRefs(useMainStore())
 
 const extractVideoId = (url: string) => {
@@ -108,7 +107,7 @@ watch(() => data.value, (newVal) => {
       </div>
     </div>
     <footer>
-      <p class="text-center text-xs text-slate-7 dark:text-slate">Made with ❤️ by <a href="https://github.com/ivanmartin33" target="_blank" class="text-blue-500">IM.</a></p>
+      <div class="text-center text-xs text-slate-7 dark:text-slate space-x-2"><span>Made with ❤️ by <a href="https://github.com/ivanmartin33" target="_blank" class="text-blue-500">IM.</a></span><span>|</span><span>Contest : <a href="https://www.youtube.com/watch?v=f7_CHu0ADhM&t=7s" target="_blank">BenjaminCode</a></span></div>
     </footer>
   </div>
 </template>

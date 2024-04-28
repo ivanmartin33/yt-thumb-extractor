@@ -16,5 +16,22 @@ export default defineNuxtConfig({
     prefix: 'Sh',
     componentDir: './components/ui'
   },
+
+  app:{
+    head: {
+      title: "Youtube Thumbnail Extractor",
+      meta: [
+        {
+          name: "description",
+          content: "Extract Youtube Thumbnail from video URL"
+        },
+        {
+          name: "author",
+          content: "Ivant Martin"
+        }
+      ],
+    
+    }
+  }
   
 })
