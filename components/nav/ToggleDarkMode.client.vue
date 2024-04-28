@@ -59,9 +59,8 @@ watchEffect(() => {
     <ShButton v-bind="$attrs" @click="toggleDarkMode" class="cursor-pointer">
       <slot>
         <span class="flex gap-2 items-center font-600 text-xs">
-          <!-- <div :class="storage == 'light' ? 'i-ph-moon' : 'i-ph-sun'" class="w-4 md:w-5 h-full aspect-square" /> -->
-          <SunIcon v-if="storage === 'dark'" class="w-8 md:w-5 h-full aspect-square" />
-          <MoonIcon v-else class="w-8 md:w-5 h-full aspect-square" />
+          <SunIcon v-if="storage === 'dark'" class="w-4 md:w-5 h-full aspect-square" />
+          <MoonIcon v-else class="w-4 md:w-5 h-full aspect-square" />
           <span class="hidden md:block">
             {{storage === 'light' ? 'Dark Mode' : 'Light Mode'}}
           </span>

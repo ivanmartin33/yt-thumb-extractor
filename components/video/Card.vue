@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { type VideoFront } from '@/server/types';
+import { placeholderB64 } from './placeholder'
 
 const props = withDefaults(defineProps<{
     video: VideoFront,
@@ -12,7 +13,9 @@ const props = withDefaults(defineProps<{
     showProgress: boolean,
     progress: number,
     isDark: string,
-    isTransparent: boolean
+    isTransparent: boolean,
+    padding: number,
+    cornerRadius: number,
 }>(),{
     showAvatar: true,
     showTitle: true,
@@ -23,7 +26,9 @@ const props = withDefaults(defineProps<{
     showProgress: true,
     progress: 37,
     isDark: 'light',
-    isTransparent: false
+    isTransparent: false,
+    padding: 50,
+    cornerRadius: 50
 });
 
 const duration = computed(() => {
@@ -86,7 +91,7 @@ const timeSince = (date: Date) => {
     return "Il y a " + Math.floor(seconds) + " secondes";
 }
 
-const imgThumb = ref<string | undefined>('')
+const imgThumb = ref<string | undefined>(placeholderB64)
 const avatar = ref<string>()
 
 onMounted(async () => {
@@ -123,17 +128,26 @@ const fetchThumbnail = async (thumb_url: string) => {
     }
 }
 
+const pad = ref(props.padding)
+watch(() => props.padding, (newVal) => {
+    pad.value = newVal
+})
+
+const round = ref(props.cornerRadius)
+watch(() => props.cornerRadius, (newVal) => {
+    round.value = newVal
+})
+
 </script>
 
 <template>
-    <div class="darkMode rounded-xl w-full py-4 px-8" :class="isTransparent ? 'noBg' : ''" :data-theme="isDark">
-    <div class="flex flex-col gap-4 w-full md:min-h-sm  justify-center">
-        <ShAspectRatio :ratio="16 / 9" class="rounded-xl overflow-hidden relative isolate">
+    <div class="darkMode dynamicXlRound w-full flex flex-col gap-4 w-full justify-center dynamicPad" :class="[isTransparent ? 'noBg' : '']" :data-theme="isDark">
+        <ShAspectRatio :ratio="16 / 9" class="overflow-hidden dynamicLgRound" :as="'div'">
             <img class="w-full h-full object-cover " :src="imgThumb"
                 alt="video thumbnail" />
             <div
                 v-if="showDuration && showMetadata"
-                class="absolute bg-black text-xs text-white font-medium bg-op-60 bottom-0 right-0 py-0.5 px-1.25 m-2.25 rounded">
+                class="absolute bg-black text-xs text-white font-medium bg-op-60 bottom-0 right-0 py-0.5 px-1.25 m-2.25 dynamicSmRound">
                 {{ duration }}
             </div>
 
@@ -142,14 +156,14 @@ const fetchThumbnail = async (thumb_url: string) => {
             </div>
         </ShAspectRatio>
         <div class="flex gap-4" v-if="showMetadata">
-            <div v-if="avatar && showAvatar">
+            <div v-if="showAvatar">
                 <ShAvatar>
-                    <ShAvatarImage :src="avatar" alt="channel avatar" />
+                    <ShAvatarImage :src="avatar!" alt="channel avatar" />
                 </ShAvatar>
             </div>
             <div class="flex flex-col">
                 <div v-if="showTitle">
-                    <h2 class="text-lg font-semibold">{{ props.video.title }}</h2>
+                    <h2 class="text-base md:text-base font-semibold text-balance ">{{ props.video.title }}</h2>
                     <p class="text-sm text-gray-500">{{ props.video.channelTitle }}</p>
                 </div>
                 <div class="flex justify-start">
@@ -159,7 +173,6 @@ const fetchThumbnail = async (thumb_url: string) => {
                 </div>
             </div>
         </div>
-    </div>
 </div>
 </template>
 
@@ -177,10 +190,21 @@ const fetchThumbnail = async (thumb_url: string) => {
 
 .darkMode {
     @apply text-[var(--font-color)] bg-[var(--bg-color)];
-
-
 }
 
+.dynamicPad {
+    padding : calc((v-bind(pad)/100) * 3.5rem);
+}
+
+.dynamicXlRound{
+    border-radius: calc((v-bind(round)/100)*3rem);
+}
+.dynamicLgRound {
+    border-radius: calc((v-bind(round)/100)*2rem);
+}
+.dynamicSmRound {
+    border-radius: calc((v-bind(round)/100)*0.5rem);
+}
 .noBg {
         @apply bg-transparent;
     }

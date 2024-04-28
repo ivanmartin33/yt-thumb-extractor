@@ -24,8 +24,8 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     )"
     v-bind="forwarded"
   >
-    <SliderTrack class="relative h-2 w-full grow overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
-      <SliderRange class="absolute h-full bg-slate-900 dark:bg-slate-50" />
+    <SliderTrack class="relative h-2 w-full grow overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800 group-disabled:bg-red">
+      <SliderRange class="absolute h-full bg-slate-900 dark:bg-slate-50 " />
     </SliderTrack>
     <SliderThumb
       v-for="(_, key) in modelValue"
