@@ -101,7 +101,7 @@ watch(() => data.value, (newVal) => {
       </div>
 
       <div class="flex flex-col gap-4 md:flex-basis-4/6">
-        <div class="bg-iconic dark:bg-iconic-dark flex justify-center rounded-xl p-4 md:p-8 min-w-95dvw md:min-w-lg">
+        <div class="bg-iconic dark:bg-iconic-dark flex justify-center rounded-xl p-4 md:p-8 min-w-95dvw md:min-w-lg border-solid border-1">
           <div ref="videoThumbRef" class="w-full h-full">
             <VideoCard v-if="data" :video="data" :show-avatar="showAvatar" :show-title="showTitle" :show-duration="showDuration"
               :show-views="showViews" :show-time-since="showTimeSince" :show-metadata="showMetadata"
@@ -121,6 +121,8 @@ watch(() => data.value, (newVal) => {
       </div>
       </div>
     </div>
-
+    <footer>
+      <p class="text-center text-xs text-slate-7 dark:text-slate">Made with ❤️ by <a href="https://github.com/ivanmartin33" target="_blank" class="text-blue-500">IM.</a></p>
+    </footer>
   </div>
 </template>

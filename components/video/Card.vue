@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<{
     isTransparent: boolean,
     padding: number,
     cornerRadius: number,
-}>(),{
+}>(), {
     showAvatar: true,
     showTitle: true,
     showDuration: true,
@@ -107,12 +107,12 @@ onMounted(async () => {
 watch(() => props.video, async (newVal) => {
     if (newVal) {
         if (newVal.thumbnails.high.url) {
-        imgThumb.value = await fetchThumbnail(newVal.thumbnails.maxres.url)
-    }
+            imgThumb.value = await fetchThumbnail(newVal.thumbnails.maxres.url)
+        }
 
-    if (newVal.channelThumbnail.url) {
-        avatar.value = await fetchThumbnail(newVal.channelThumbnail.url)
-    }
+        if (newVal.channelThumbnail.url) {
+            avatar.value = await fetchThumbnail(newVal.channelThumbnail.url)
+        }
     }
 }, { deep: true })
 
@@ -141,18 +141,17 @@ watch(() => props.cornerRadius, (newVal) => {
 </script>
 
 <template>
-    <div class="darkMode dynamicXlRound w-full flex flex-col gap-4 w-full justify-center dynamicPad" :class="[isTransparent ? 'noBg' : '']" :data-theme="isDark">
+    <div id="main-card" class="darkMode dynamicXlRound w-full flex flex-col gap-4 w-full justify-center dynamicPad"
+        :class="[isTransparent ? 'noBg' : '']" :data-theme="isDark">
         <ShAspectRatio :ratio="16 / 9" class="overflow-hidden dynamicLgRound" :as="'div'">
-            <img class="w-full h-full object-cover " :src="imgThumb"
-                alt="video thumbnail" />
-            <div
-                v-if="showDuration && showMetadata"
-                class="absolute bg-black text-xs text-white font-medium bg-op-60 bottom-0 right-0 py-0.5 px-1.25 m-2.25 dynamicSmRound">
+            <img class="w-full h-full object-cover " :src="imgThumb" alt="video thumbnail" />
+            <div v-if="showDuration && showMetadata"
+                class="absolute bg-black text-xs text-white font-medium bg-op-60 bottom-0 right-0 py-0.5 px-1.25 m-2.25 dynamicSmRound dynamicMargin">
                 {{ duration }}
             </div>
 
             <div v-if="showProgress" class="absolute bottom-0 w-full">
-                <ShProgress :model-value="progress"  class="rounded-none h-1.25"/>
+                <ShProgress :model-value="progress" class="rounded-none h-1.25" />
             </div>
         </ShAspectRatio>
         <div class="flex gap-4" v-if="showMetadata">
@@ -167,13 +166,16 @@ watch(() => props.cornerRadius, (newVal) => {
                     <p class="text-sm text-gray-500">{{ props.video.channelTitle }}</p>
                 </div>
                 <div class="flex justify-start">
-                    <div v-if="showViews" class="text-sm text-gray-500">{{ formatViews(parseInt(props.video.viewCount)) }} vues</div>
-                    <div v-if="showTimeSince" class="text-sm text-gray-500 not-first:before:content-['•'] not-first:before:my-0 not-first:before:mx-4px">{{ timeSince(new
-                        Date(props.video.publishedAt)) }}</div>
+                    <div v-if="showViews" class="text-sm text-gray-500">{{ formatViews(parseInt(props.video.viewCount))
+                        }} vues</div>
+                    <div v-if="showTimeSince"
+                        class="text-sm text-gray-500 not-first:before:content-['•'] not-first:before:my-0 not-first:before:mx-4px">
+                        {{ timeSince(new
+                            Date(props.video.publishedAt)) }}</div>
                 </div>
             </div>
         </div>
-</div>
+    </div>
 </template>
 
 <style scoped>
@@ -190,22 +192,32 @@ watch(() => props.cornerRadius, (newVal) => {
 
 .darkMode {
     @apply text-[var(--font-color)] bg-[var(--bg-color)];
+
+    --calc-radius-base: calc((v-bind(round)/100)*3rem);
+    --calc-padding-base: calc((v-bind(pad)/100)*3.5rem);
 }
 
 .dynamicPad {
-    padding : calc((v-bind(pad)/100) * 3.5rem);
+    padding : var(--calc-padding-base);
+}
+:deep(.dynamicMargin) {
+    margin : calc((v-bind(round)/100) * 0.5rem + 0.5rem) calc((v-bind(round)/100) * 0.75rem + 0.5rem);
 }
 
 .dynamicXlRound{
-    border-radius: calc((v-bind(round)/100)*3rem);
+    border-radius: calc((var(--calc-radius-base) + (var(--calc-padding-base))) * 0.0000000000001 + var(--calc-radius-base));
 }
 .dynamicLgRound {
-    border-radius: calc((v-bind(round)/100)*2rem);
+    border-radius: var(--calc-radius-base);
 }
 .dynamicSmRound {
     border-radius: calc((v-bind(round)/100)*0.5rem);
 }
+
+
 .noBg {
-        @apply bg-transparent;
-    }
+    @apply bg-transparent;
+}
+
+
 </style>

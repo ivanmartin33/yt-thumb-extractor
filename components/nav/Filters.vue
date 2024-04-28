@@ -14,6 +14,24 @@ const padding = defineModel<Array<number>>('padding', { default: [50], type: Arr
 const cornerRadius = defineModel<Array<number>>('cornerRadius', { default: [50], type: Array })
 const globalDisabled = defineModel('globalDisabled', { default: false, type: Boolean })
 
+
+
+const reset = () => {
+  showMetadata.value = true
+  showAvatar.value = true
+  showTitle.value = true
+  showDuration.value = true
+  showViews.value = true
+  showTimeSince.value = true
+  showProgress.value = true
+  isDark.value = 'light'
+  progress.value = [37]
+  isTransparent.value = false
+  padding.value = [50]
+  cornerRadius.value = [50]
+}
+
+
 </script>
 
 <template>
@@ -67,6 +85,9 @@ const globalDisabled = defineModel('globalDisabled', { default: false, type: Boo
       <ShSlider :max="100" :step="1" v-model="cornerRadius" @dblclick="cornerRadius = [50]" :disabled="globalDisabled"/>
       
     </ShCardContent>
+    <ShCardFooter>
+      <ShButton :disabled="globalDisabled" @click="reset" class="font-bold cursor-pointer">Reset</ShButton>
+    </ShCardFooter>
   </ShCard>
 </template>
 

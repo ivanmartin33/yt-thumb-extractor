@@ -72,7 +72,7 @@ export default defineConfig({
   ],
   rules: [
     ['bg-iconic', { background: 'repeating-conic-gradient(#f6f3f0, #f6f3f0 25%, #e5e5e5 0%, #e5e5e5 50%)', 'background-size': '1.5rem 1.5rem' }],
-    ['bg-iconic-dark', { background: 'repeating-conic-gradient(#1a1a1a, #1a1a1a 25%, #0b0b0b 0%, #0b0b0b 50%)', 'background-size': '1.5rem 1.5rem' }],
+    ['bg-iconic-dark', { background: 'repeating-conic-gradient(#050505, #050505 25%, hsl(223deg 10% 7%) 0%, hsl(223deg 10%, 7%) 50%)', 'background-size': '1.5rem 1.5rem' }],
   ],
   content: {
     pipeline: {
